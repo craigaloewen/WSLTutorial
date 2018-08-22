@@ -1,5 +1,7 @@
+License from csswin10 project by kexanie:
+[WTFPL](http://www.wtfpl.net/)
 
-
+Original License from CodePen:
 <!--
 Copyright (c) 2018 by Craig Loewen (https://codepen.io/craigaloewen/pen/BOyRJN)
 

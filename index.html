@@ -17,17 +17,33 @@
   
 <div class="container">
   <h1>Terminal</h1>
-  <div class="header">
-    <div class="dot red"></div>
-    <div class="dot yellow"></div>
-    <div class="dot green"></div>
+  <div id="titlebar">
+    <span id="close" class="max-min-close">&#10006;</span>
+    <span id="max" class="max-min-close">&#9633;</span>
+    <span id="min" class="max-min-close">—</span>
   </div>
   <div class="panel">
-    <div class="action">
-      <div class="command"><span class="symbol">$</span>
-        <input class="in" type="text" placeholder="help" autofocus=""/>
+    <div class="window-padding">
+      <div class="action">
+        <div class="command">
+          <span class="symbol">$</span><span class= "intro-command">help</span>
+        </div>
+        <div class="output">Welcome to the WSL tutorial! Today you will learn how WSL can: <br>
+          <ul><li>Run windows tools through WSL with command line!</li></ul>
+          Please follow all directions below. Keep in mind this is just a demonstration
+          for learning purposes and is not running an actual instance of bash or Windows. <br><hr>
+
+          Below is a mock instance of a CLI running bash on the Windows Subsystem for Linux. <br>
+          First let's find our IP Address using ipconfig.exe. Type in: <br>
+          ipconfig.exe | grep -A 4 -B 8 IPv4
+        </div>
       </div>
-      <div class="output"></div>
+      <div class="action">
+        <div class="command"><span class="symbol">$</span>
+          <input class="in" type="text" autofocus=""/>
+        </div>
+        <div class="output"></div>
+      </div>
     </div>
   </div>
 </div>
@@ -38,7 +54,7 @@
     <script  src="js/index.js"></script>
 
 
-
+    
 
 </body>
 

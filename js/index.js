@@ -1,132 +1,73 @@
+// A list of the inputs and outputs of all commands you want in the tutorial
+// Possible to do: Add a 'command output' and then a 'tutorial output' section
+// TO make it a little more clearer what part of the output is a command
+// and what part of the output is the tutorial telling you your next steps
 tutorial_list = [
-    ["Test 1","Output 1 what do you mean"],
-    ["Test 2","Output 2"]
+    ["ipconfig.exe | grep -A 4 -B 8 IPv4","Windows IP Configuration                  <br>\
+                                                                                     <br>\
+                                                                                     <br>\
+    Ethernet adapter vEthernet (Default Switch):                                     <br>\
+                                                                                     <br>\
+       Connection-specific DNS Suffix  . :                                           <br>\
+       Link-local IPv6 Address . . . . . : 1234::1234:1234:1234:6c9a%21              <br>\
+       <b>IPv4</b> Address. . . . . . . . . . . : 123.45.67.89                      <br>\
+       Subnet Mask . . . . . . . . . . . : 255.255.255.255                           <br>\
+       Default Gateway . . . . . . . . . :                                           <br>\
+                                                                                     <br>\
+    Ethernet adapter Ethernet:                                                       <br>\
+                                                                                     <br>\
+       Connection-specific DNS Suffix  . : corp.microsoft.com                        <br>\
+       IPv6 Address. . . . . . . . . . . : 1234:1234:d8:405:e487:8113:1234:b13       <br>\
+       Temporary IPv6 Address. . . . . . : 1234:4898:d8:405:5555:cc0:f8d1:2601       <br>\
+       Link-local IPv6 Address . . . . . : 1234::5222:8113:3b43:b13%16               <br>\
+       <b>IPv4</b> Address. . . . . . . . . . . : XX.XXX.XXX.XXX                     <br>\
+       Subnet Mask . . . . . . . . . . . : 255.255.254.0                             <br>\
+       Default Gateway . . . . . . . . . : 1234::1234:1234:fe3c:c200%16              <br>\
+                                           XX.XXX.XXX.X                              <br>\
+    <br>\
+    Now we can easily put that IP Address into a file. Use:                          <br>\
+    echo \"123.45.67.89\" >> ipaddress.txt"],
+    ["echo \"123.45.67.89\" >> ipaddress.txt","<br>\
+    And then lastly we can take the contents of that file and put it into our clipboard using: <br>\
+    cat ipaddress.txt >> clip.exe"],
+    ["cat ipaddress.txt >> clip.exe","<br>\
+    And it's that easy! (Please note that in this case it won't actually be copied to your clipboard \
+    as this is a mock bash instance)"],
+    ["Done!","You finished the tutorial!"]
 ]
 
 tutorial_index = 0
 
+// Initialize our placeholder
+$(".in").attr("placeholder",tutorial_list[tutorial_index][0])
+
+// The function that's called when you press enter
 $(".panel").on('keypress', ".in", function(e) {
     if (e.which == 13) {
         $(this).prop('readonly', true);
-        var input = $(this).val().split(" ");
-        if (input[1]) {
-            var output = execute(input[0], input[1]);
-        } else {
-            var output = execute(input[0], "");
-        }
+        var input = $(this).val();
+        var output = stepTutorial(input);
         $(".output").last().html(output)
-        $(".panel").append($("<div class='action'>").html("<div class='action'><div class='command'><span class='symbol'>$</span><input class='in' type='text'></div><div class='output'></div></div>"));
-        //$(".in").attr("placeholder",tutorial_list[0][1])
+        $(".window-padding").append($("<div class='action'>").html("<div class='action'><div class='command'><span class='symbol'>$</span><input class='in' type='text'></div><div class='output'></div></div>"));
+        $(".in").attr("placeholder",tutorial_list[tutorial_index][0])
         $(".in").last().focus();
     }
 });
 
-
-function execute(command, parameters) {
-    console.log(command, parameters);
-    if (window[command]) {
-        return window[command](parameters);
-    } else {
-        return "bash: " + command + " : command not found";
-    }
-}
-
-files = {
-    "root": {
-        "aboutme.txt": "-Get new shell, -Buy Milk",
-        "passwords.txt": "gmail: p@ssword, reddit: hunter2",
-        "projects": {
-            "bio.txt": "cells organisms",
-            "chem.txt": "ions protons"
+// Step through the tutorial
+function stepTutorial(input_line) {
+    console.log(input_line)
+    if (input_line.replace(/ /g,'') == tutorial_list[tutorial_index][0].replace(/ /g,'')) {
+        var return_string = tutorial_list[tutorial_index][1];
+        if (tutorial_index < tutorial_list.length - 1) {
+            tutorial_index++;
         }
+        return return_string
     }
+    return "Please follow the tutorial by inputting: " + tutorial_list[tutorial_index][0];
 }
 
-
-var upperFolder = null;
-var currentFolder = files["root"];
-var path = [];
-
-
-function ls() {
-    var keys = [];
-    for (var key in currentFolder) {
-        if (currentFolder.hasOwnProperty(key)) { //to be safe
-            keys.push(key);
-        }
-    }
-    return keys.join(" ");
-}
-
-function cat(filename) {
-    if (filename == "") {
-        return "usage: cat file ...";
-    }
-    if (typeof currentFolder[filename] == "object") {
-        return "cat: " + filename + " : Is a directory"
-
-    }
-    if (currentFolder[filename] == "") {
-        return "";
-    }
-    if (currentFolder[filename]) {
-        return currentFolder[filename];
-    } else {
-        return "cat: " + filename + " : No such file or directory"
-    }
-}
-
-function cd(folder) {
-    if (folder == "") {
-        return "";
-    }
-    if (folder == "..") {
-        if (path.length > 0) {
-            currentFolder = upperFolder;
-            path.pop();
-        }
-    } else if (typeof currentFolder[folder] == "object") {
-        upperFolder = currentFolder;
-        currentFolder = currentFolder[folder];
-        path.push(folder);
-    } else {
-        return "bash: cd: " + folder + ": No such file or directory";
-    }
-}
-
-function mkdir(folderName) {
-    if (folderName != "") {
-        currentFolder[folderName] = {};
-        return "";
-    } else {
-        return "usage: mkdir directory ...";
-    }
-}
-
-function touch(fileName) {
-    currentFolder[fileName] = "";
-}
-
-function echo(string) {
-    return string;
-}
-
-function rm(name) {
-    delete currentFolder[name]
-}
-
-function help() {
-    return "Commands: ls, cd, mkdir, echo, touch, rm, cat, pwd, help";
-}
-
-function pwd() {
-    if (path.length == 0) {
-        return "/"
-    }
-    return "/" + path.join("/")
-}
-
-
+// Animate the scrolling screen
 $('.panel').stop().animate({
     scrollTop: $(".panel")[0].scrollHeight
 }, 800);

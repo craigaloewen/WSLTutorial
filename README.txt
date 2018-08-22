@@ -1,5 +1,8 @@
-A Pen created at CodePen.io. You can find this one at https://codepen.io/craigaloewen/pen/BOyRJN.
+# Try the Command Line Tutorial
+The purpose of this project is to make an online tutorial that will show people how to use 
+features inside of the command line. This version of the tutorial is aimed towards
+showing users the capabilities of the Windows Subsystem for Linux
 
- Bash Terminal Emulation using HTML, CSS, and JS. Supports the following commands: ls, cd, mkdir, echo, touch, rm, cat, pwd, help. 
-
-Can easily add new commands by making a new function with command name. 
+# Original Sources
+This tool was based upon a pen at CodePen.io. The original pen is by Sashank (https://codepen.io/sthupukari/pen/VYjGpL)
+The header of the window is based on code from: [csswin10 by kexanie](https://github.com/kexanie/csswin10)

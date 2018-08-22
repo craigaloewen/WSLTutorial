@@ -2,7 +2,7 @@
 
 
 body {
-    font-family: 'Open Sans', sans-serif;
+    font-family: Consolas,monaco,monospace;
     background: #9b59b6;
 }
 
@@ -53,8 +53,12 @@ h1{
 .panel {
     height: 70vh;
     background: #27292c;
-    padding: 20px;
     overflow-y: scroll;
+    width: 100%;
+}
+
+.window-padding {
+    padding: 20px;
 }
 
 .action {
@@ -80,9 +84,58 @@ input[type="text"] {
     font-size: 16px;
 }
 
+.intro-command {
+    width: 90%;
+    background: #27292c;
+    border: none;
+    outline: none;
+    color: white;
+    margin-left: 5px;
+    font-size: 16px;
+}
+
 .output {
     color: white;
     font-weight: 300;
     margin-top: 5px;
     margin-left: 12px;
 }
+
+#titlebar {
+    height: 30px;
+    width: 100%;
+    background: #FFFFFF;
+}
+
+#titlebar span {
+    padding-left: 8px;
+    padding-right: 8px;
+    padding-top: 4.5px;
+    padding-bottom: 4.5px;
+}
+
+.max-min-close {
+    float: right;
+    width: 30px;
+    padding: 10px;
+    text-align: center;
+}
+
+#close, #min {
+    font-size: 0.9em;
+}
+span#max {
+    font-size: 1.4em;
+    line-height: 0.7em;
+    padding-bottom: 10px;
+}
+
+#max:hover, #min:hover {
+    background-color: rgb(229,229,229);
+}
+
+#close:hover {
+    color:white;
+    background-color: rgb(232,17,35);
+}
+
